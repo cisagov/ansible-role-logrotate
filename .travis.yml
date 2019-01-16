@@ -1,0 +1,9 @@
+---
+language: python
+services: docker
+
+install:
+  - pip install --upgrade pip setuptools molecule docker wheel
+
+script:
+  - molecule test
