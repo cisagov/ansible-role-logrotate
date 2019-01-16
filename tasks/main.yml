@@ -1,0 +1,50 @@
+---
+# tasks file for logrotate
+
+- name: Install logrotate
+  package:
+    name: logrotate
+
+# Setting backrefs to yes stops lineinfile from appending the line to
+# the end of the file if the regex doesn't match
+- name: Modify system-wide logrotate configuration
+  lineinfile:
+    dest: /etc/logrotate.conf
+    regexp: "{{item.regex}}"
+    state: present
+    line: "{{item.line}}"
+    backrefs: yes
+  loop:
+    # Rotate log files daily
+    - regex: '^# rotate log files'
+      line: '# rotate log files daily'
+    - regex: '^weekly'
+      line: 'daily'
+    # Keep 30 days worth of logs
+    - regex: '^# keep 4 weeks'
+      line: '# keep 30 days worth of backlogs'
+    - regex: '^rotate 4'
+      line: 'rotate 30'
+    # Compress log files
+    - regex: '^#compress'
+      line: compress
+
+# Amazon Linux (Red Hat) stores similar configuration information in
+# /etc/logrotate.d/syslog, but there the files are already rotated
+# daily.
+- name: Modify rsyslog configuration
+  lineinfile:
+    dest: /etc/logrotate.d/rsyslog
+    regexp: "{{item.regex}}"
+    state: present
+    line: "{{item.line}}"
+    backrefs: yes
+  loop:
+    # Rotate log files daily
+    - regex: '\s*weekly'
+      line: '\tdaily'
+    # Keep seven days worth of logs
+    - regex: '\s*rotate'
+      line: '\trotate 7'
+  when:
+    - ansible_os_family == "Debian"
