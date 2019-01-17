@@ -1,0 +1,19 @@
+---
+galaxy_info:
+  author: David Redmin
+  description: Install and configure logrotate
+  company: DHS NCATS
+  license: CC0
+  min_ansible_version: 2.0
+  platforms:
+    - name: Debian
+      versions:
+        - jessie
+        - stretch
+    - name: Amazon
+      versions:
+        - 2018.03
+  galaxy_tags:
+    - logrotate
+
+dependencies: []
