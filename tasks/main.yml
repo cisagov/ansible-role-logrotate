@@ -10,9 +10,9 @@
 - name: Modify system-wide logrotate configuration
   lineinfile:
     dest: /etc/logrotate.conf
-    regexp: "{{item.regex}}"
+    regexp: "{{ item.regex }}"
     state: present
-    line: "{{item.line}}"
+    line: "{{ item.line }}"
     backrefs: yes
   loop:
     # Rotate log files daily
@@ -35,9 +35,9 @@
 - name: Modify rsyslog configuration
   lineinfile:
     dest: /etc/logrotate.d/rsyslog
-    regexp: "{{item.regex}}"
+    regexp: "{{ item.regex }}"
     state: present
-    line: "{{item.line}}"
+    line: "{{ item.line }}"
     backrefs: yes
   loop:
     # Rotate log files daily
