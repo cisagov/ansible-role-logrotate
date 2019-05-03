@@ -1,3 +1,5 @@
+"""Module containing the tests for the default scenario."""
+
 import os
 import pytest
 
@@ -10,6 +12,7 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 @pytest.mark.parametrize("pkg", ["logrotate"])
 def test_packages(host, pkg):
+    """Test that the appropriate packages were installed."""
     package = host.package(pkg)
 
     assert package.is_installed
@@ -26,6 +29,7 @@ def test_packages(host, pkg):
     ],
 )
 def test_files(host, file, content):
+    """Test that config files were modified as expected."""
     f = host.file(file)
 
     assert f.exists
@@ -40,6 +44,7 @@ def test_files(host, file, content):
     ],
 )
 def test_rsyslog_file(host, file, content):
+    """Test that config files were modified as expected."""
     f = host.file(file)
 
     # The file only exists on Debian systems
