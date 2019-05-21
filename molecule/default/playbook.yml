@@ -1,13 +1,4 @@
 ---
-# rsyslog is already installed on the AMIs we are using
-- name: Create
-  hosts: all
-  tasks:
-    - name: Install rsyslog
-      package:
-        name: rsyslog
-        state: present
-
 - name: Converge
   hosts: all
   roles:
