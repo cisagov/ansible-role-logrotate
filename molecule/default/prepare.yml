@@ -1,0 +1,16 @@
+---
+# rsyslog is installed anywhere we would be applying this Ansible role
+- name: Prepare
+  hosts: all
+  tasks:
+    # This is required temporarily, because of
+    # https://github.com/ansible/ansible/issues/56583
+    - name: Temporary workaround for ansible/ansible#56583
+      set_fact:
+        ansible_facts:
+          pkg_mgr: yum
+      when: ansible_os_family == "RedHat" and ansible_distribution == "Amazon"
+    - name: Install rsyslog
+      package:
+        name: rsyslog
+        state: present

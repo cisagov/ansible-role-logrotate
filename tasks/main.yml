@@ -1,6 +1,12 @@
 ---
 # tasks file for logrotate
 
+- name: Temporary workaround for ansible/ansible#56583
+  set_fact:
+    ansible_facts:
+      pkg_mgr: yum
+  when: ansible_os_family == "RedHat" and ansible_distribution == "Amazon"
+
 - name: Install logrotate
   package:
     name: logrotate
