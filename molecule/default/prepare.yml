@@ -3,6 +3,8 @@
 - name: Prepare
   hosts: all
   tasks:
+    # This is required temporarily, because of
+    # https://github.com/ansible/ansible/issues/56583
     - name: Temporary workaround for ansible/ansible#56583
       set_fact:
         ansible_facts:
