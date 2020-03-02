@@ -17,17 +17,17 @@
     backrefs: yes
   loop:
     # Rotate log files daily
-    - regex: '^# rotate log files'
-      line: '# rotate log files daily'
-    - regex: '^weekly'
-      line: 'daily'
+    - regex: "^# rotate log files"
+      line: "# rotate log files daily"
+    - regex: "^weekly"
+      line: "daily"
     # Keep 30 days worth of logs
-    - regex: '^# keep 4 weeks'
-      line: '# keep 30 days worth of backlogs'
-    - regex: '^rotate 4'
-      line: 'rotate 30'
+    - regex: "^# keep 4 weeks"
+      line: "# keep 30 days worth of backlogs"
+    - regex: "^rotate 4"
+      line: "rotate 30"
     # Compress log files
-    - regex: '^#compress'
+    - regex: "^#compress"
       line: compress
 
 # Amazon Linux (Red Hat) stores similar configuration information in
@@ -35,6 +35,10 @@
 # daily.
 #
 # For Fedora and Debian we have to modify the existing configuration.
+#
+# Note that I use single quotes for the regexes, so the backslashed
+# characters in them don't get interpreted by YAML as escapes (like
+# \t).
 - name: Modify rsyslog configuration (Debian)
   lineinfile:
     path: /etc/logrotate.d/rsyslog
