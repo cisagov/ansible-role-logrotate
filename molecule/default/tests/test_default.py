@@ -1,8 +1,10 @@
 """Module containing the tests for the default scenario."""
 
+# Standard Python Libraries
 import os
-import pytest
 
+# Third-Party Libraries
+import pytest
 import testinfra.utils.ansible_runner
 
 testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
@@ -39,14 +41,14 @@ def test_files(host, file, content):
 @pytest.mark.parametrize(
     "file,content",
     [
-        ("/etc/logrotate.d/rsyslog", r"^\s*daily"),
-        ("/etc/logrotate.d/rsyslog", r"^\s*rotate 7"),
+        ("/etc/logrotate.d/rsyslog", r"^\s*daily$"),
+        ("/etc/logrotate.d/rsyslog", r"^\s*rotate 7$"),
     ],
 )
 def test_rsyslog_file(host, file, content):
     """Test that config files were modified as expected."""
     f = host.file(file)
 
-    # The file only exists on Debian systems
+    # The file only exists on non-Amazon systems
     if f.exists:
         assert f.contains(content)
