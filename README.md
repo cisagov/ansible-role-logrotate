@@ -17,6 +17,13 @@ apply.
 
 None.
 
+<!--
+| Variable | Description | Default | Required |
+|----------|-------------|---------|----------|
+| optional_variable | Describe its purpose. | `default_value` | No |
+| required_variable | Describe its purpose. | n/a | Yes |
+-->
+
 ## Dependencies ##
 
 None.
@@ -35,7 +42,7 @@ Here's how to use it in a playbook:
 
 ## Contributing ##
 
-We welcome contributions!  Please see [here](CONTRIBUTING.md) for
+We welcome contributions!  Please see [`CONTRIBUTING.md`](CONTRIBUTING.md) for
 details.
 
 ## License ##
