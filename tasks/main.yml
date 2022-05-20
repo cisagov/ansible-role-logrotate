@@ -2,14 +2,14 @@
 # tasks file for logrotate
 
 - name: Install logrotate
-  package:
+  ansible.builtin.package:
     name:
       - logrotate
 
 # Setting backrefs to yes stops lineinfile from appending the line to
 # the end of the file if the regex doesn't match
 - name: Modify system-wide logrotate configuration
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/logrotate.conf
     regexp: "{{ item.regex }}"
     state: present
@@ -44,7 +44,7 @@
 # from giving a warning about the use of tabs.  In general this is a
 # bad idea, but here it is necessary.
 - name: Modify rsyslog configuration (Debian)
-  lineinfile:  # noqa no-tabs
+  ansible.builtin.lineinfile:  # noqa no-tabs
     path: /etc/logrotate.d/rsyslog
     regexp: "{{ item.regex }}"
     state: present
@@ -61,7 +61,7 @@
     - ansible_os_family == "Debian"
 
 - name: Modify rsyslog configuration (Fedora)
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/logrotate.d/rsyslog
     insertbefore: "}"
     state: present
