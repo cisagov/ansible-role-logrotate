@@ -15,9 +15,7 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 @pytest.mark.parametrize("pkg", ["logrotate"])
 def test_packages(host, pkg):
     """Test that the appropriate packages were installed."""
-    package = host.package(pkg)
-
-    assert package.is_installed
+    assert host.package(pkg).is_installed
 
 
 @pytest.mark.parametrize(

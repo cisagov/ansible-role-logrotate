@@ -1,6 +1,13 @@
-# molecule v3 introduces substantial changes to how tests are configured.
-# Moving to v3+ will require other changes to be in place so we will pin under
-# that version for now. When v3 sees an official release we should revisit and
-# make the necessary changes.
-molecule[docker] < 3
+--requirement requirements.txt
+# With the release of version 2.10, Ansible finally correctly
+# identifies Kali Linux as being the Kali distribution of the Debian
+# OS family.  This simplifies a lot of things for roles that support
+# Kali Linux, so it makes sense to force the installation of Ansible
+# 2.10 or newer.
+ansible>=2.10,<6
+ansible-lint>=5,<6
+flake8
+molecule[docker]
 pre-commit
+pytest-testinfra
+yamllint
