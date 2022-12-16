@@ -1,8 +1,7 @@
 # ansible-role-logrotate #
 
 [![GitHub Build Status](https://github.com/cisagov/ansible-role-logrotate/workflows/build/badge.svg)](https://github.com/cisagov/ansible-role-logrotate/actions)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/cisagov/ansible-role-logrotate.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/ansible-role-logrotate/alerts/)
-[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/cisagov/ansible-role-logrotate.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/ansible-role-logrotate/context:python)
+[![CodeQL](https://github.com/cisagov/ansible-role-logrotate/workflows/CodeQL/badge.svg)](https://github.com/cisagov/ansible-role-logrotate/actions/workflows/codeql-analysis.yml)
 
 An Ansible role for installing and configuring
 [`logrotate`](https://github.com/logrotate/logrotate).
@@ -36,8 +35,10 @@ Here's how to use it in a playbook:
 - hosts: all
   become: yes
   become_method: sudo
-  roles:
-    - logrotate
+  tasks:
+    - name: Install logrotate
+      ansible.builtin.include_role:
+        name: logrotate
 ```
 
 ## Contributing ##
