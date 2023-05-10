@@ -1,0 +1,12 @@
+---
+- name: Modify rsyslog configuration
+  ansible.builtin.lineinfile:
+    path: /etc/logrotate.d/rsyslog
+    insertbefore: "}"
+    state: present
+    line: "{{ item.line }}"
+  loop:
+    # Rotate log files daily
+    - line: "    daily"
+    # Keep seven days worth of logs
+    - line: "    rotate 7"
