@@ -1,6 +1,4 @@
 ---
-# tasks file for logrotate
-
 - name: Install logrotate
   ansible.builtin.package:
     name:
@@ -30,10 +28,6 @@
     - regex: "^#compress"
       line: compress
 
-# Amazon Linux (Red Hat) stores similar configuration information in
-# /etc/logrotate.d/syslog, but there the files are already rotated
-# daily.
-#
 # For Fedora and Debian we have to modify the existing configuration.
 #
 # Note that I use single quotes for the regexes, so the backslashed
@@ -60,7 +54,7 @@
   when:
     - ansible_os_family == "Debian"
 
-- name: Modify rsyslog configuration (Fedora)
+- name: Modify rsyslog configuration (RedHat)
   ansible.builtin.lineinfile:
     path: /etc/logrotate.d/rsyslog
     insertbefore: "}"
@@ -72,4 +66,4 @@
     # Keep seven days worth of logs
     - line: "    rotate 7"
   when:
-    - ansible_distribution == "Fedora"
+    - ansible_os_family == "RedHat"

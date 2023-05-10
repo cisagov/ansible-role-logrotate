@@ -26,6 +26,8 @@ def test_packages(host, pkg):
         ("/etc/logrotate.conf", r"^# keep 30 days worth of backlogs"),
         ("/etc/logrotate.conf", r"^rotate 30"),
         ("/etc/logrotate.conf", r"^compress"),
+        ("/etc/logrotate.d/rsyslog", r"^\s*daily$"),
+        ("/etc/logrotate.d/rsyslog", r"^\s*rotate 7$"),
     ],
 )
 def test_files(host, file, content):
@@ -34,19 +36,3 @@ def test_files(host, file, content):
 
     assert f.exists
     assert f.contains(content)
-
-
-@pytest.mark.parametrize(
-    "file,content",
-    [
-        ("/etc/logrotate.d/rsyslog", r"^\s*daily$"),
-        ("/etc/logrotate.d/rsyslog", r"^\s*rotate 7$"),
-    ],
-)
-def test_rsyslog_file(host, file, content):
-    """Test that config files were modified as expected."""
-    f = host.file(file)
-
-    # The file only exists on non-Amazon systems
-    if f.exists:
-        assert f.contains(content)
