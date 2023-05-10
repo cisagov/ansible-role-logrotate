@@ -1,0 +1,22 @@
+---
+# Note that I use single quotes for the regexes, so the backslashed
+# characters in them don't get interpreted by YAML as escapes (like
+# \t).
+#
+# Also note that a noqa line is necessary here to stop ansible-lint
+# from giving a warning about the use of tabs.  In general this is a
+# bad idea, but here it is necessary.
+- name: Modify rsyslog configuration
+  ansible.builtin.lineinfile:  # noqa no-tabs
+    path: /etc/logrotate.d/rsyslog
+    regexp: "{{ item.regex }}"
+    state: present
+    line: "{{ item.line }}"
+    backrefs: yes
+  loop:
+    # Rotate log files daily
+    - regex: '\s*weekly$'
+      line: "\tdaily"
+    # Keep seven days worth of logs
+    - regex: '\s*rotate \d+$'
+      line: "\trotate 7"

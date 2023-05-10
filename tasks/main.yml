@@ -28,42 +28,15 @@
     - regex: "^#compress"
       line: compress
 
-# For Fedora and Debian we have to modify the existing configuration.
-#
-# Note that I use single quotes for the regexes, so the backslashed
-# characters in them don't get interpreted by YAML as escapes (like
-# \t).
-#
-# Also note that a noqa line is necessary here to stop ansible-lint
-# from giving a warning about the use of tabs.  In general this is a
-# bad idea, but here it is necessary.
-- name: Modify rsyslog configuration (Debian)
-  ansible.builtin.lineinfile:  # noqa no-tabs
-    path: /etc/logrotate.d/rsyslog
-    regexp: "{{ item.regex }}"
-    state: present
-    line: "{{ item.line }}"
-    backrefs: yes
-  loop:
-    # Rotate log files daily
-    - regex: '\s*weekly$'
-      line: "\tdaily"
-    # Keep seven days worth of logs
-    - regex: '\s*rotate \d+$'
-      line: "\trotate 7"
-  when:
-    - ansible_os_family == "Debian"
-
-- name: Modify rsyslog configuration (RedHat)
-  ansible.builtin.lineinfile:
-    path: /etc/logrotate.d/rsyslog
-    insertbefore: "}"
-    state: present
-    line: "{{ item.line }}"
-  loop:
-    # Rotate log files daily
-    - line: "    daily"
-    # Keep seven days worth of logs
-    - line: "    rotate 7"
-  when:
-    - ansible_os_family == "RedHat"
+# The exact way we modify the logrotate configuration depends on the
+# OS family
+- name: Load tasks file for updating the logrotate configuration
+  ansible.builtin.include_tasks: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      files:
+        - update_config_{{ ansible_distribution }}_{{ ansible_distribution_release }}.yml
+        - update_config_{{ ansible_distribution }}.yml
+        - update_config_{{ ansible_os_family }}.yml
+      paths:
+        - "{{ role_path }}/tasks"
