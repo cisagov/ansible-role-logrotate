@@ -4,7 +4,7 @@
     name:
       - logrotate
 
-# Setting backrefs to yes stops lineinfile from appending the line to
+# Setting backrefs to true stops lineinfile from appending the line to
 # the end of the file if the regex doesn't match
 - name: Modify system-wide logrotate configuration
   ansible.builtin.lineinfile:
@@ -12,7 +12,7 @@
     regexp: "{{ item.regex }}"
     state: present
     line: "{{ item.line }}"
-    backrefs: yes
+    backrefs: true
   loop:
     # Rotate log files daily
     - regex: "^# rotate log files"
