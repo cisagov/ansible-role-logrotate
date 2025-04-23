@@ -15,17 +15,40 @@
     backrefs: true
   loop:
     # Rotate log files daily
-    - regex: "^# rotate log files"
-      line: "# rotate log files daily"
-    - regex: "^weekly"
-      line: "daily"
+    #
+    # yamllint complains about the use of quotes in this line, but
+    # we require the quotes because we're using the octothorpe
+    # special character.
+    # yamllint disable-line rule:quoted-strings
+    - regex: '^# rotate log files'
+      # yamllint complains about the use of quotes in this line, but
+      # we require the quotes because we're using the octothorpe
+      # special character.
+      # yamllint disable-line rule:quoted-strings
+      line: '# rotate log files daily'
+    - regex: ^weekly
+      line: daily
     # Keep 30 days worth of logs
-    - regex: "^# keep 4 weeks"
-      line: "# keep 30 days worth of backlogs"
-    - regex: "^rotate 4"
-      line: "rotate 30"
+    #
+    # yamllint complains about the use of quotes in this line, but
+    # we require the quotes because we're using the octothorpe
+    # special character.
+    # yamllint disable-line rule:quoted-strings
+    - regex: '^# keep 4 weeks'
+      # yamllint complains about the use of quotes in this line, but
+      # we require the quotes because we're using the octothorpe
+      # special character.
+      # yamllint disable-line rule:quoted-strings
+      line: '# keep 30 days worth of backlogs'
+    - regex: ^rotate 4
+      line: rotate 30
     # Compress log files
-    - regex: "^#compress"
+    #
+    # yamllint complains about the use of quotes in this line, but
+    # we require the quotes because we're using the octothorpe
+    # special character.
+    # yamllint disable-line rule:quoted-strings
+    - regex: '^#compress'
       line: compress
 
 # The exact way we modify the logrotate configuration depends on the
