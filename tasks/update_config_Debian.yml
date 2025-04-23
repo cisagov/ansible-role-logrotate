@@ -15,8 +15,28 @@
     backrefs: true
   loop:
     # Rotate log files daily
+    #
+    # yamllint complains about this quoted string, but single-quoting
+    # it is the best way to avoid conflicts between YAML special
+    # characters and regex special characters.
+    # yamllint disable-line rule:quoted-strings
     - regex: '\s*weekly$'
+      # yamllint complains about this quoted string, but we need to
+      # use double-quotes because they allow us to use escape
+      # sequences.
+      #
+      # yamllint disable-line rule:quoted-strings
       line: "\tdaily"
     # Keep seven days worth of logs
+    #
+    # yamllint complains about this quoted string, but single-quoting
+    # it is the best way to avoid conflicts between YAML special
+    # characters and regex special characters.
+    # yamllint disable-line rule:quoted-strings
     - regex: '\s*rotate \d+$'
+      # yamllint complains about this quoted string, but we need to
+      # use double-quotes because they allow us to use escape
+      # sequences.
+      #
+      # yamllint disable-line rule:quoted-strings
       line: "\trotate 7"
