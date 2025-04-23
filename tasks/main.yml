@@ -58,6 +58,9 @@
   vars:
     params:
       files:
+        # yamllint complains about this line being slightly too long,
+        # but breaking it up would be even uglier.
+        # yamllint disable-line rule:line-length
         - update_config_{{ ansible_distribution }}_{{ ansible_distribution_release }}.yml
         - update_config_{{ ansible_distribution }}.yml
         - update_config_{{ ansible_os_family }}.yml
